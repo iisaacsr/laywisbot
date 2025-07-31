@@ -2,6 +2,7 @@
 /cover
 /deps
 /doc
+/priv/wisdom.yml
 /.fetch
 erl_crash.dump
 *.ez
