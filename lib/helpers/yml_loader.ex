@@ -1,7 +1,7 @@
+# reads .yml files in the /priv dir
+
 defmodule LaywisBot.Helpers.YamlLoader do
   require Logger
-
-  # reads .yml files in the /priv dir
 
   def load_yaml(filename, app_name) do
     app_root_dir = Application.app_dir(app_name)
