@@ -9,6 +9,8 @@ defmodule LaywisBot.CommandHandler do
   alias Nostrum.Struct.VoiceState
   alias Nostrum.Struct.Event.SpeakingUpdate
 
+  #todo : switch to case block instead maybe?
+
   def handle_event({:READY, _, _}), do: CommandLoader.load_all()
   def handle_event({:INTERACTION_CREATE, intr, _}), do: Dispatcher.handle_interaction(intr)
   def handle_event({:MESSAGE_CREATE, %Message{content: content, guild_id: guild_id}, _ws_state}), do: Logger.info("sent message \"#{content}\" on guild #{guild_id}")
@@ -18,15 +20,7 @@ defmodule LaywisBot.CommandHandler do
     Logger.info"#{speaking_status} in guild #{guild_id}"
   end
   def handle_event({:RESUMED, _, %WSState{gateway: gateway, session: session}}), do: Logger.info("resumed session #{session} on gateway #{gateway}")
-
-  def handle_event({atom_name, _payload, _ws_state}) do
-    Logger.warning("received unhandled event of type: #{atom_name}")
-    []
-  end
-
+  def handle_event({atom_name, _payload, _ws_state}), do: Logger.warning("received unhandled event of type: #{atom_name}")
   # double catch, just in case (switch one another if need of more detail)
-  def handle_event(other_event) do
-    Logger.warning("received unhandled event of type: #{inspect(other_event)}")
-    []
-  end
+  def handle_event(other_event), do: Logger.warning("received unhandled event of type: #{inspect(other_event)}")
 end

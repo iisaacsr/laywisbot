@@ -17,6 +17,7 @@
   "salchicha": {:hex, :salchicha, "0.4.0", "930cbb172701ed0adff3be0b94c9e0b197988c9a21028f2c33620f5c1982a519", [:mix], [], "hexpm", "e62a8f769f7bd873ac3335c0be79c4eb14e1b7e65e5278cfe09060d36e396bc9"},
   "salsa20": {:hex, :salsa20, "1.0.4", "404cbea1fa8e68a41bcc834c0a2571ac175580fec01cc38cc70c0fb9ffc87e9b", [:mix], [], "hexpm", "745ddcd8cfa563ddb0fd61e7ce48d5146279a2cf7834e1da8441b369fdc58ac6"},
   "sourceror": {:hex, :sourceror, "1.10.0", "38397dedbbc286966ec48c7af13e228b171332be1ad731974438c77791945ce9", [:mix], [], "hexpm", "29dbdfc92e04569c9d8e6efdc422fc1d815f4bd0055dc7c51b8800fb75c4b3f1"},
+  "todo": {:hex, :todo, "1.6.0", "d115e10d0f5e6405b2329fd4a9354f0e072c95e5953498cca7b4c41a28c3f0ed", [:mix], [], "hexpm", "88872a112816d4710452ca0d9cf9eacac1f310d07db6ad9ad03ac2977ac35233"},
   "yamerl": {:hex, :yamerl, "0.10.0", "4ff81fee2f1f6a46f1700c0d880b24d193ddb74bd14ef42cb0bcf46e81ef2f8e", [:rebar3], [], "hexpm", "346adb2963f1051dc837a2364e4acf6eb7d80097c0f53cbdc3046ec8ec4b4e6e"},
   "yaml_elixir": {:hex, :yaml_elixir, "2.11.0", "9e9ccd134e861c66b84825a3542a1c22ba33f338d82c07282f4f1f52d847bd50", [:mix], [{:yamerl, "~> 0.10", [hex: :yamerl, repo: "hexpm", optional: false]}], "hexpm", "53cc28357ee7eb952344995787f4bb8cc3cecbf189652236e9b163e8ce1bc242"},
 }
