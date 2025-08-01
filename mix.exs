@@ -22,7 +22,8 @@ defmodule LaywisBot.MixProject do
     [
       {:nostrum, git: "https://github.com/iisaacsr/nostrum", override: true},
       {:nosedrum, git: "https://github.com/jchristgit/nosedrum"},
-      {:yaml_elixir, "~> 2.0"}
+      {:yaml_elixir, "~> 2.0"},
+      {:jason, "~> 1.4"}
     ]
   end
 end

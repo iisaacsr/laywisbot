@@ -1,5 +1,6 @@
 defmodule LaywisBot.Commands.Voice.Play do
   require Logger
+
   @behaviour Nosedrum.ApplicationCommand
 
   alias Nostrum.Voice
@@ -7,57 +8,57 @@ defmodule LaywisBot.Commands.Voice.Play do
   def name(), do: "play"
 
   @impl true
-  def description(), do: "play music"
+  def description(), do: "plays a song (search or url)"
 
   @impl true
   def options(), do: [
     %{
-      type: :sub_command,
-      name: "song",
-      description: "play a default song (search)"
-    },
-    %{
-      type: :sub_command,
-      name: "url",
-      description: "play url from a website (youtube, soundcloud)",
-      options: [
-        %{
-          type: :string,
-          name: "url",
-          description: "url to the song",
-          required: true
-        }
-      ]
+      type: :string,
+      name: "query",
+      description: "url to the song or search parameters",
+      required: true
     }
   ]
-
-  @soundcloud_url "https://soundcloud.com/fyre-brand/level-up"
 
   @impl true
   def command(interaction) do
     guild_id = interaction.guild_id
+    voice_channel_id = Helpers.VoiceHelpers.get_voice_channel_of_interaction(interaction)
 
-    subcommand_data = List.first(interaction.data.options)
+    user_input = Enum.find_value(interaction.data.options, nil, fn
+      %{name: "query", value: value} -> value # Now we look for 'query'
+      _ -> nil
+    end)
 
-    if Voice.ready?(guild_id) do
-      case subcommand_data.name do
-        "song" ->
-          Logger.info("Playing default Soundcloud song in guild #{guild_id}")
-          Voice.play(guild_id, @soundcloud_url, :ytdl)
-          [content: "playing song..."]
-        "url" ->
-          # Extract the URL from the nested options
-          Voice.stop(guild_id)
-          play_url = List.first(subcommand_data.options).value
-          Logger.info("Playing URL: #{play_url} in guild #{guild_id} with ytdl")
-          Voice.play(guild_id, play_url, :ytdl, realtime: true)
-          [content: "playing song from url..."]
-        _ ->
-          Logger.warning("unknown subcommand: #{inspect(subcommand_data.name)}")
-          [content: "(url) only works right now"]
-      end
-    else
-      [content: "use /join first (for now)"]
+    if !Voice.ready?(guild_id) do
+      Voice.join_channel(guild_id, voice_channel_id)
+
+      # gamer move (what is async?)
+      Process.sleep(1500)
+    end
+
+    song = Helpers.VoiceHelpers.parse_user_input(user_input)
+
+    case song do
+      {:ok, stream_url, song_title} ->
+        if Voice.ready?(guild_id) do
+          if stream_url do
+            case Voice.play(guild_id, stream_url, :ytdl) do
+              :ok ->
+                [content: "playing: **#{song_title}**"]
+              {:error, reason} ->
+                Logger.error("couldn't play url #{stream_url} in guild #{guild_id}")
+                [content: "couldn't play the song: #{inspect(reason)}"]
+            end
+          else
+            [content: "couldn't find the song"]
+          end
+        else
+          [content: "i'm not in a channel (use /join, bug)"]
+        end
+
+      {:error, message} ->
+        [content: message]
     end
   end
 

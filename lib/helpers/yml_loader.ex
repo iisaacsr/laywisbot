@@ -1,6 +1,6 @@
 # reads .yml files in the /priv dir
 
-defmodule LaywisBot.Helpers.YamlLoader do
+defmodule Helpers.YamlLoader do
   require Logger
 
   def load_yaml(filename, app_name) do
